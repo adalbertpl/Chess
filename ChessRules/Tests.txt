@@ -1,0 +1,15 @@
+export default class ChessRulesTests {
+
+    testA2A1() {
+        var move = Move.get([0, 1], [0, 0])
+
+        var position = StartPosition.get()
+        var result = MoveChecker.check(position, move)
+
+        expect(result).toBeFalse()
+
+        expect(
+            () => MoveMaker.move(position, move)
+        ).toThrow()
+    }
+}
