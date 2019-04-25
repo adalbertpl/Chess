@@ -4,7 +4,11 @@ To build application, use build.ps1 script.
 To run unit tests, use jest.
 To run built app go into ..\bin\ChessMiniApp and use this command:
 > node .\ChessMiniApp.js
-Before building application or running tests you need to install these packages
+Before build you need to clone these repos:
+https://github.com/adalbertpl/Chess.AmUtils (into AmUtils)
+https://github.com/adalbertpl/PiecesBoard (into PiecesBoard)
+
+Also before build or running tests you need to install these packages
 on parent(..) folder:
 
 {
