@@ -8,13 +8,21 @@ import King from "../King"
 
 export default class PieceType {
     static staticConstructor() {
-        this.whitePawn = WhitePawn.get()
-        this.blackPawn = BlackPawn.get()
-        this.rook = Rook.get()
-        this.knight = Knight.get()
-        this.bishop = Bishop.get()
-        this.queen = Queen.get()
-        this.king = King.get()
+        this.whitePawn = PieceType.validate(WhitePawn.get())
+        this.blackPawn = PieceType.validate(BlackPawn.get())
+        this.rook = PieceType.validate(Rook.get())
+        this.knight = PieceType.validate(Knight.get())
+        this.bishop = PieceType.validate(Bishop.get())
+        this.queen = PieceType.validate(Queen.get())
+        this.king = PieceType.validate(King.get())
+    }
+
+    static validate(obj) {
+        if (typeof obj.checkMove !== 'function') {
+            throw new Error("invalid type")
+        }
+
+        return obj
     }
 }
 
