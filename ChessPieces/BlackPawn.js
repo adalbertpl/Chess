@@ -1,4 +1,5 @@
 import PawnF from "./!src/PawnF"
+import Side from "../ChessData/Side"
 
 export default class BlackPawn {
 

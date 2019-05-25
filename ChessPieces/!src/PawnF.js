@@ -1,8 +1,9 @@
-import Union from "../UniChessPieces/Union"
-import Direction from "./!data-classes/Direction"
-import Slider from "../UniChessPieces/Slider"
-import Mover from "../UniChessPieces/Mover"
-import StartLimiter from "../UniChessPieces/StartLimiter"
+import Union from "../../UniChessPieces/Union"
+import Direction from "../!data-classes/Direction"
+import Slider from "../../UniChessPieces/Slider"
+import Mover from "../../UniChessPieces/Mover"
+import StartLimiter from "../../UniChessPieces/StartLimiter"
+import Side from "../../ChessData/Side"
 
 export default class PawnF {
     static getStartRank(side) {
