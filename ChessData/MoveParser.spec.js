@@ -1,6 +1,6 @@
 import MoveParser from "./MoveParser"
-import Move from "../../ChessRules/Move"
-import Square from "../../ChessRules/Square"
+import Move from "./Move"
+import Square from "./Square"
 
 function prepareMove(sr, sc, er, ec) {
     return Move.get(Square.get(sr, sc), Square.get(er, ec));

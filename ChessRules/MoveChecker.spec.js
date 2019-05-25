@@ -1,7 +1,7 @@
-import Move from "./!data-classes/Move"
+import Move from "../ChessData/Move"
 import MoveChecker from "./MoveChecker"
 import StartPosition from "./StartPosition"
-import Square from "../PiecesBoard/!data-classes/Square"
+import Square from "../ChessData/Square"
 
 test("Move should be valid", () => {
     // arrange

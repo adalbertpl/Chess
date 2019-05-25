@@ -1,9 +1,9 @@
 import StartPosition from "./StartPosition"
 
-import Square from "../PiecesBoard/!data-classes/Square"
+import Square from "../ChessData/Square"
 import Piece from "../ChessPieces/!data-classes/Piece"
 import PieceType from "../ChessPieces/!data-classes/PieceType"
-import Side from "../ChessPieces/!data-classes/Side"
+import Side from "../ChessData/Side"
 
 test("position should contain pawns", () => {
     // Arrange
