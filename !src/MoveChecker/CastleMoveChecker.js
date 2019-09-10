@@ -1,10 +1,11 @@
 export default class CastleMoveChecker {
-    static checkMove(gamePosition, move) {
-        if (move.side != gamePosition.side) {
-            throw new Error("cannot move opponent piece")
-        }
+    constructor(wing) {
+        this.wing = wing;
+    }
 
-        this._checkMove(piecesPosition, move.side, move.castleFlank)
+    static checkMove(gamePosition, move) {
+        this._checkIfRookIsOnStartPlace();
+        this._checkIfEmptySquaresBetween();
     }
 
     static _checkMove(gamePosition, moveSide, castleFlank) {
@@ -12,12 +13,6 @@ export default class CastleMoveChecker {
 
         var kingSquare = this._getKingStartSquare(moveSide)
         var leftRookSquare = this._getRookStartSquare(moveSide, castleFlank)
-
-        var king = piecesPosition.get(kingSquare)
-        if (king == null 
-        || king.pieceType != PieceType.king) {
-            throw new Error("there is no king on start square")
-        }
         
         var rook = piecesPosition.get(leftRookSquare)
         if (rook == null
