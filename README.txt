@@ -22,3 +22,7 @@ on parent(..) folder:
         "webpack": "^3.12.0"
     }
 }
+
+Notes:
+1) To run ps1 scripts you need to change execution policy.
+To do it you need to run powershell as admin and write 'Set-ExecutionPolicy RemoteSigned'.
