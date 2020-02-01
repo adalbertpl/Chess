@@ -1,10 +1,10 @@
 import Range from "AmUtils/Range"
-import PiecesBoard from "PiecesBoard/PiecesBoard"
+import PiecesBoard from "../PiecesBoard/PiecesBoard"
 
-import Square from "ChessData/Square"
-import Side from "ChessData/Side"
-import PieceType from "ChessPieces/!data-classes/PieceType"
-import Piece from "ChessPieces/!data-classes/Piece"
+import Square from "../ChessData/Square"
+import Side from "../ChessData/Side"
+import PieceType from "../ChessPieces/!data-classes/PieceType"
+import Piece from "../ChessPieces/!data-classes/Piece"
 
 import GamePosition from "./!data-classes/GamePosition"
 

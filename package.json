@@ -1,0 +1,28 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "chess",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.8.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adalbertpl/Chess.git"
+  },
+  "author": "Wojciech Kałuski",
+  "license": "SEE LICENSE IN .",
+  "bugs": {
+    "url": "https://github.com/adalbertpl/Chess/issues"
+  },
+  "homepage": "https://github.com/adalbertpl/Chess#readme"
+}

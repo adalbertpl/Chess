@@ -1,4 +1,4 @@
-import Side from "ChessData/Side"
+import Side from "../ChessData/Side"
 import PieceType from "../ChessPieces/!data-classes/PieceType"
 
 export default class MoveMaker {
