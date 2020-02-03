@@ -1,4 +1,5 @@
 import ChessMiniAppApi from "./ChessMiniAppApi"
+import CommandParser from "./!src/CommandParser"
 import readline from "readline"
 
 const rl = readline.createInterface({
@@ -9,27 +10,13 @@ const rl = readline.createInterface({
 class ChessMiniApp {
   main() {
     var app = new ChessMiniAppApi()
+    var cmdParser = new CommandParser(app, ChessMiniAppApi.getDescription());
     
     rl.on('line', (inputStr) => {
-      var msg = ""
-      var input = inputStr.split(" ")
+      var msg = cmdParser.parse(inputStr);
 
-      if (input[0] == "makeMove") {
-        msg = app.makeMove(input[1])
-
-      } else if (input[0] == "checkMove") {
-        msg = app.checkMove(input[1])
-      
-      } else if (input[0] == "showPosition") {
-        msg = app.showPosition()
-      
-      } else {
-        msg = "invalid command"
-      }
-
-      if (msg != "") {
+      if (msg != "")
           console.log(msg);
-      }
     })
   }
 }

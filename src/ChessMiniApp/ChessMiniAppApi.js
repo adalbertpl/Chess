@@ -6,6 +6,8 @@ import ValidMoveMessage from "./Messages/ValidMoveMessage"
 import InvalidMoveMessage from "./Messages/InvalidMoveMessage"
 import WinnerMessage from "./Messages/WinnerMessage"
 import ChessPositionDrawer from "./!src/ChessPositionDrawer"
+import MethodDescription from "./!src/MethodDescription";
+import ArgumentDescription from "./!src/ArgumentDescription";
 
 export default class ChessMiniAppApi {
     constructor() {
@@ -43,5 +45,17 @@ export default class ChessMiniAppApi {
         } catch (e) {
             return InvalidMoveMessage.get(e.message)
         }
+    }
+
+    static getDescription() {
+        return {
+            "checkMove": new MethodDescription("check if move is correct", [
+                new ArgumentDescription("move", "e.g. a2-a4")
+            ]),
+            "makeMove": new MethodDescription("make move (with checking)", [
+                new ArgumentDescription("move", "e.g. a2-a4")
+            ]),
+            "showPosition": new MethodDescription("show currect position as ascii art", [])
+        };
     }
 }
