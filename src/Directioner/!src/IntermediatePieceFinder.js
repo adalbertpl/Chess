@@ -1,4 +1,4 @@
-import Square from "ChessData/Square"
+import Square from "../../PiecesBoard/Square"
 
 export default class IntermediatePieceFinder {
     static find(from, direction, mlt, piecesPosition) {

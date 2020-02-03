@@ -1,4 +1,4 @@
-import Directioner from "Directioner/Directioner"
+import Directioner from "../Directioner/Directioner"
 
 export default class Mover {
     constructor(captureConf, directions) {

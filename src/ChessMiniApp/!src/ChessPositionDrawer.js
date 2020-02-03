@@ -1,7 +1,7 @@
 import Range from "AmUtils/Range"
-import PieceType from "ChessPieces/!data-classes/PieceType"
-import Side from "ChessData/Side"
-import Square from "ChessData/Square"
+import PieceType from "../../ChessPieces/!data-classes/PieceType"
+import Side from "../../ChessData/Side"
+import Square from "../../PiecesBoard/Square"
 
 export default class ChessPositionDrawer {
     static draw(piecesPosition) {

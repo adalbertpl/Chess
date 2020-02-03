@@ -1,4 +1,4 @@
-import Vector from "../../AmUtils/Vector"
+import Vector from "AmUtils/Vector"
 
 export default class Direction {
     static staticConstructor() {
