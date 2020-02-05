@@ -1,0 +1,36 @@
+{
+  "_version": 1,
+  "name": "chess",
+  "startPosition": [
+    {
+      "row": 1,
+      "column": [0, 1, 2, 3, 4, 5, 6, 7],
+      "type": "pawn"
+    },
+    {
+      "row": 0,
+      "column": [0, 7],
+      "type": "rook"
+    },
+    {
+      "row": 0,
+      "column": [1, 6],
+      "type": "knight"
+    },
+    {
+      "row": 0,
+      "column": [2, 5],
+      "type": "bishop"
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "type": "queen"
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "type": "king"
+    }
+  ]
+}

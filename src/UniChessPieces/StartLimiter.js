@@ -5,7 +5,8 @@ export default class StartLimiter {
     }
 
     checkMove(from, to, piecesPosition) {
-        var result = this.startCondition(from)
+        var piece = piecesPosition.get(from);
+        var result = this.startCondition(from, piece.side);
         if (!result) {
             return "bad start square"
         }

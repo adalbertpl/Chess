@@ -1,5 +1,4 @@
-import WhitePawn from "../WhitePawn"
-import BlackPawn from "../BlackPawn"
+import Pawn from "../Pawn"
 import Rook from "../Rook"
 import Knight from "../Knight"
 import Bishop from "../Bishop"
@@ -8,8 +7,7 @@ import King from "../King"
 
 export default class PieceType {
     static staticConstructor() {
-        this.whitePawn = PieceType.validate(WhitePawn.get())
-        this.blackPawn = PieceType.validate(BlackPawn.get())
+        this.pawn = PieceType.validate(Pawn.get())
         this.rook = PieceType.validate(Rook.get())
         this.knight = PieceType.validate(Knight.get())
         this.bishop = PieceType.validate(Bishop.get())

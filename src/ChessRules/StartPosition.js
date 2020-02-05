@@ -1,55 +1,59 @@
-import Range from "AmUtils/Range"
-import PiecesBoard from "../PiecesBoard/PiecesBoard"
-
-import Square from "../ChessData/Square"
+import fs from "fs"
+import Bishop from "../ChessPieces/Bishop";
+import Rook from "../ChessPieces/Rook";
+import Queen from "../ChessPieces/Queen";
+import King from "../ChessPieces/King";
+import Pawn from "../ChessPieces/Pawn";
+import Knight from "../ChessPieces/Knight";
+import Piece from "../ChessPieces/!data-classes/Piece";
+import PiecesBoard from "../PiecesBoard/PiecesBoard";
 import Side from "../ChessData/Side"
-import PieceType from "../ChessPieces/!data-classes/PieceType"
-import Piece from "../ChessPieces/!data-classes/Piece"
-
-import GamePosition from "./!data-classes/GamePosition"
+import Square from "../PiecesBoard/Square";
+import GamePosition from "../ChessRules/!data-classes/GamePosition";
+import PieceType from "../ChessPieces/!data-classes/PieceType";
 
 export default class StartPosition {
   static get() {
-    var piecesBoard = new PiecesBoard()
-    this._fillPiecesBoard(piecesBoard)
+    var rawdata = fs.readFileSync('./data/chess.json');
+    var chessData = JSON.parse(rawdata);
 
-    var gamePosition = GamePosition.get(Side.white, piecesBoard)
-    return gamePosition
-  }
+    var piecesBoard = new PiecesBoard();
 
-  static _getPiece(pieceType, side) {
-    return new Piece(pieceType, side)
-  }
+    for (var startPosition of chessData.startPosition) {
+      var pieceType = this._getChessPieceTypeByName(startPosition.type);
+      for (var row of this._wrapIfNotArray(startPosition.row)) {
+        for (var column of this._wrapIfNotArray(startPosition.column)) {
+          var piece = new Piece(pieceType, Side.white);
+          console.log(row + " " + column);
+          piecesBoard.set(Square.get(row, column), piece);
 
-  static _fillPiecesBoard(data) {
-    var row = 1
-    for (var column of Range.get(0, 8)) {
-      data.set(Square.get(row, column), this._getPiece(PieceType.whitePawn, Side.white))
-    }
-    
-    row = 0
-    data.set(Square.get(row, 0), this._getPiece(PieceType.rook   , Side.white))
-    data.set(Square.get(row, 1), this._getPiece(PieceType.knight , Side.white))
-    data.set(Square.get(row, 2), this._getPiece(PieceType.bishop , Side.white))
-    data.set(Square.get(row, 3), this._getPiece(PieceType.queen  , Side.white))
-    data.set(Square.get(row, 4), this._getPiece(PieceType.king   , Side.white))
-    data.set(Square.get(row, 5), this._getPiece(PieceType.bishop , Side.white))
-    data.set(Square.get(row, 6), this._getPiece(PieceType.knight , Side.white))
-    data.set(Square.get(row, 7), this._getPiece(PieceType.rook   , Side.white))     
-
-    var row = 6
-    for (var column of Range.get(0, 8)) {
-      data.set(Square.get(row, column), this._getPiece(PieceType.blackPawn, Side.black))
+          piece = new Piece(pieceType, Side.black);
+          piecesBoard.set(Square.get(7 - row, column), piece);
+        }
+      }
     }
 
-    row = 7
-    data.set(Square.get(row, 0), this._getPiece(PieceType.rook   , Side.black))
-    data.set(Square.get(row, 1), this._getPiece(PieceType.knight , Side.black))
-    data.set(Square.get(row, 2), this._getPiece(PieceType.bishop , Side.black))
-    data.set(Square.get(row, 3), this._getPiece(PieceType.queen  , Side.black))
-    data.set(Square.get(row, 4), this._getPiece(PieceType.king   , Side.black))
-    data.set(Square.get(row, 5), this._getPiece(PieceType.bishop , Side.black))
-    data.set(Square.get(row, 6), this._getPiece(PieceType.knight , Side.black))
-    data.set(Square.get(row, 7), this._getPiece(PieceType.rook   , Side.black))  
+    var gamePosition = GamePosition.get(Side.white, piecesBoard);
+    return gamePosition;
+  }
+
+  static _wrapIfNotArray(value) {
+    if (Array.isArray(value))
+      return value;
+
+    return [value];
+  }
+
+  static _getChessPieceTypeByName(name) {
+    var pieceTypes = {
+      "pawn": PieceType.pawn,
+      "knight": PieceType.knight,
+      "bishop": PieceType.bishop,
+      "rook": PieceType.rook,
+      "queen": PieceType.queen,
+      "king": PieceType.king
+    }
+
+    return pieceTypes[name];
   }
 }
