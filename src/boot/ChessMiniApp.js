@@ -1,5 +1,5 @@
-import ChessMiniAppApi from "./ChessMiniAppApi"
-import CommandParser from "./!src/CommandParser"
+import ChessMiniAppApi from "../ChessMiniApp/ChessMiniAppApi"
+import CommandParser from "../CommandParser/CommandParser"
 import readline from "readline"
 
 const rl = readline.createInterface({
