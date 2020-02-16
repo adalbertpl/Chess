@@ -8,6 +8,8 @@ import WinnerMessage from "./Messages/WinnerMessage"
 import ChessPositionDrawer from "./!src/ChessPositionDrawer"
 import MethodDescription from "./!src/MethodDescription";
 import ArgumentDescription from "./!src/ArgumentDescription";
+import PieceSymbol from "../ChessPieces/PieceSymbol";
+import Square from "../PiecesBoard/Square";
 
 export default class ChessMiniAppApi {
     constructor() {
@@ -15,8 +17,29 @@ export default class ChessMiniAppApi {
     }
 
     showPosition() {
-        var drawnPosition = ChessPositionDrawer.draw(this.gamePosition.piecesPosition)
-        return drawnPosition
+        return this.serializePosition();
+    }
+
+    serializePosition() {
+        var result = "";
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                var square = Square.get(i, j);
+                var optionalPiece = this.gamePosition.piecesPosition.get(Square.get(i, j));
+                if (optionalPiece != null) {
+                    result += this.serializeSquare(square) + this.serializePiece(optionalPiece) + ",";
+                }
+            }
+        }
+        return result;
+    }
+
+    serializeSquare(square) {
+        return String.fromCharCode(97 + square.column) + (square.row + 1);
+    }
+
+    serializePiece(piece) {
+        return PieceSymbol.get(piece);
     }
 
     checkMove(moveStr) {

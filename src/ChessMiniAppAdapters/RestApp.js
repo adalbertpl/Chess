@@ -1,7 +1,9 @@
 import express from "express"
 import ChessMiniAppApi from "../ChessMiniApp/ChessMiniAppApi";
+import cors from "cors";
 
 var app = express();
+app.use(cors());
 app.use(express.json({
     strict: false
 }));
