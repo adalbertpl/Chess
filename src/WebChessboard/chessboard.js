@@ -15,13 +15,50 @@ root.innerHTML = new EmptyChessboard({
     y: 8
 }).asHtml();
 
-fetch("http://localhost:3000/showPosition")
-.then((response) => response.json())
-.then((data) => {
-    root.innerHTML += data;
-    deserializePosition(data);
-    showPosition();
-})
+var clickedPiece;
+
+root.onclick = function() {
+    var x = event.clientX;
+    var y = event.clientY;
+    x = Math.floor(x / 30);
+    y = Math.floor(y / 30);
+    var square1 = SquareParser.parse("e2");
+    var square2 = Square.get(y, x);
+    console.log("" + x + " " + y);
+    var move = serializeSquare(square1) + "-" + serializeSquare(square2);
+    console.log(move);
+    fetch("http://localhost:3000/makeMove", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            move: move
+        })
+    }).then((response) => response.json())
+    .then((data) => {
+        console.log("response2: " + data);
+        a();
+    });
+}
+
+
+
+function a() {
+    fetch("http://localhost:3000/showPosition")
+    .then((response) => response.json())
+    .then((data) => {
+        root.innerHTML += data;
+        deserializePosition(data);
+        showPosition();
+    })
+}
+
+a();
+
+function serializeSquare(square) {
+    return String.fromCharCode(97 + square.column) + (square.row + 1);
+}
 
 function showPosition() {
     for (var i = 0; i < 8; ++i) {
@@ -38,6 +75,18 @@ function showPosition() {
             }
         }
     }
+
+    var letterElements = document.getElementsByClassName("letter-block");
+    for (var letterElement of letterElements) {
+        letterElement.onclick = function(e) {
+            onclick(letterElement);
+        };
+    }
+}
+
+function onclick(letterElement) {
+    clickedPiece = letterElement
+    console.log("aa1");
 }
 
 function deserializePosition(sPosition) {

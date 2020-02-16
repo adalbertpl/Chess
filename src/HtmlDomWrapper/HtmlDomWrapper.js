@@ -82,6 +82,7 @@ export class LetterBlock {
 
     asHtml() {
         return new HtmlDomElement("div", {
+            class: "letter-block",
             style: new StyleAttribute({
                 width: "" + this.size.x + "px",
                 height: "" + this.size.y + "px",

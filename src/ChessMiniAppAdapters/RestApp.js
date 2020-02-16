@@ -10,8 +10,8 @@ app.use(express.json({
 var chessMiniApp = new ChessMiniAppApi();
 
 app.post("/makeMove", (req, res) => {
-    
-    var msg = chessMiniApp.makeMove(req.body);
+    console.log("restapp body: " + JSON.stringify(req.body));
+    var msg = chessMiniApp.makeMove(req.body.move);
     res.json(msg);
 });
 app.get("/showPosition", (req, res) => {
