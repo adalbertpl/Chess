@@ -82,10 +82,13 @@ export class LetterBlock {
 
     asHtml() {
         return new HtmlDomElement("div", {
-            width: "" + this.width + "px",
-            height: "" + this.height + "px",
-            left: "" + this.position.x + "px",
-            top: "" + this.position.y + "px",
+            style: new StyleAttribute({
+                width: "" + this.size.x + "px",
+                height: "" + this.size.y + "px",
+                position: "absolute",
+                left: "" + this.position.x + "px",
+                top: "" + this.position.y + "px"
+            })
         }, this.letter).asHtml();
     }    
 }
