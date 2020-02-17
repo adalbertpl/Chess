@@ -19,4 +19,4 @@ class ChessSide {
     }
 }
 
-ChessSide.staticConstructor();
+ChessSides.staticConstructor();

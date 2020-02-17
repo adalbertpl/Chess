@@ -102,23 +102,3 @@ function deserializePosition(sPosition) {
     }
 }
 
-function symbolToPiece(sPiece) {
-    var sPieceType = sPiece.toLowerCase();
-    console.log(sPieceType);
-    var side = (sPiece == sPieceType) ? ChessSides.Black : ChessSides.White;
-    var pieceType = _getChessPieceTypeBySymbolStr(sPieceType);
-    return new Piece(pieceType, side);
-}
-
-function _getChessPieceTypeBySymbolStr(name) {
-    var pieceTypes = {
-      "p": PieceType.pawn,
-      "n": PieceType.knight,
-      "b": PieceType.bishop,
-      "r": PieceType.rook,
-      "q": PieceType.queen,
-      "k": PieceType.king
-    }
-
-    return pieceTypes[name];
-  }
