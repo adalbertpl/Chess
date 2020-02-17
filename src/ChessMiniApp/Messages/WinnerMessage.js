@@ -1,5 +1,5 @@
 export default class WinnerMessage {
     get(side) {
-        return "mate, " + side + " has won"
+        return "mate, " + side.name + " has won"
     }
 }

@@ -1,4 +1,4 @@
-import Side from "../ChessData/Side"
+import ChessSides from "../ChessPieces/ChessSides"
 import PieceType from "../ChessPieces/!data-classes/PieceType"
 
 export default class MoveMaker {
@@ -28,10 +28,10 @@ export default class MoveMaker {
     }
 
     static _changeSide(gamePosition) {
-        if (gamePosition.currentSide == Side.white) {
-            gamePosition.currentSide = Side.black
+        if (gamePosition.currentSide == ChessSides.White) {
+            gamePosition.currentSide = ChessSides.Black
         } else {
-            gamePosition.currentSide = Side.white
+            gamePosition.currentSide = ChessSides.White
         }
     }
 }

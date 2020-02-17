@@ -7,7 +7,7 @@ import Pawn from "../ChessPieces/Pawn";
 import Knight from "../ChessPieces/Knight";
 import Piece from "../ChessPieces/!data-classes/Piece";
 import PiecesBoard from "../PiecesBoard/PiecesBoard";
-import Side from "../ChessData/Side"
+import ChessSides from "../ChessPieces/ChessSides"
 import Square from "../PiecesBoard/Square";
 import GamePosition from "../ChessRules/!data-classes/GamePosition";
 import PieceType from "../ChessPieces/!data-classes/PieceType";
@@ -23,17 +23,17 @@ export default class StartPosition {
       var pieceType = this._getChessPieceTypeByName(startPosition.type);
       for (var row of this._wrapIfNotArray(startPosition.row)) {
         for (var column of this._wrapIfNotArray(startPosition.column)) {
-          var piece = new Piece(pieceType, Side.white);
+          var piece = new Piece(pieceType, ChessSides.White);
           console.log(row + " " + column);
           piecesBoard.set(Square.get(row, column), piece);
 
-          piece = new Piece(pieceType, Side.black);
+          piece = new Piece(pieceType, ChessSides.Black);
           piecesBoard.set(Square.get(7 - row, column), piece);
         }
       }
     }
 
-    var gamePosition = GamePosition.get(Side.white, piecesBoard);
+    var gamePosition = GamePosition.get(ChessSides.White, piecesBoard);
     return gamePosition;
   }
 

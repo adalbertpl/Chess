@@ -1,7 +1,7 @@
 import {EmptyChessboard, LetterBlock} from "../HtmlDomWrapper/HtmlDomWrapper"
 import PiecesBoard from "../PiecesBoard/PiecesBoard";
 import SquareParser from "../ChessData/SquareParser";
-import Side from "../ChessData/Side";
+import ChessSides from "../ChessPieces/ChessSides";
 import PieceType from "../ChessPieces/!data-classes/PieceType";
 import Piece from "../ChessPieces/!data-classes/Piece";
 import Square from "../PiecesBoard/Square";
@@ -105,7 +105,7 @@ function deserializePosition(sPosition) {
 function symbolToPiece(sPiece) {
     var sPieceType = sPiece.toLowerCase();
     console.log(sPieceType);
-    var side = (sPiece == sPieceType) ? Side.black : Side.white;
+    var side = (sPiece == sPieceType) ? ChessSides.Black : ChessSides.White;
     var pieceType = _getChessPieceTypeBySymbolStr(sPieceType);
     return new Piece(pieceType, side);
 }

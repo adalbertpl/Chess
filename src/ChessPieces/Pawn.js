@@ -3,7 +3,7 @@ import Direction from "./!data-classes/Direction"
 import Slider from "../UniChessPieces/Slider"
 import Mover from "../UniChessPieces/Mover"
 import StartLimiter from "../UniChessPieces/StartLimiter"
-import Side from "../ChessData/Side"
+import ChessSides from "./ChessSides"
 
 export default class Pawn {  
     static get() {
@@ -24,7 +24,7 @@ export default class Pawn {
     }
 
     static _getStartRank(side) {
-        if (side == Side.white) {
+        if (side == ChessSides.White) {
             return 1;
         } else {
             return 6;

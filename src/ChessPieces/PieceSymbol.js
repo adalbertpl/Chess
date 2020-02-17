@@ -1,5 +1,5 @@
 import PieceType from "./!data-classes/PieceType"
-import Side from "../ChessData/Side"
+import ChessSides from "./ChessSides"
 
 export default class PieceSymbol {
     static _getPieceTypeSymbol(pieceType) {
@@ -15,7 +15,7 @@ export default class PieceSymbol {
     static get(piece) {
         var symbol = this._getPieceTypeSymbol(piece.pieceType)
 
-        if (piece.side == Side.white) {
+        if (piece.side == ChessSides.White) {
             return symbol.toUpperCase()
         } else {
             return symbol
