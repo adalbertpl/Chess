@@ -93,10 +93,17 @@ function reloadPosition() {
     fetch("http://localhost:3000/showPosition")
     .then((response) => response.json())
     .then((data) => {
-        root.innerHTML += data;
+        removeLetters();
+        //root.innerHTML += data;
         deserializePosition(data);
         showPosition();
     })
+}
+
+function removeLetters() {
+    for (var node of Array.from(root.getElementsByClassName("letter-block"))) {
+        root.removeChild(node);
+    }
 }
 
 reloadPosition();
