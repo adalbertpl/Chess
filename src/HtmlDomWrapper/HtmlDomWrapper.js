@@ -3,7 +3,7 @@
 export class VerticalLine {
     constructor(height, position) {
         this.height = height;
-        this.position = position
+        this.position = position;
     }
 
     asHtml() {
@@ -20,23 +20,33 @@ export class VerticalLine {
     }
 }
 
+class Nullable {
+    static ifNull(value, ifNullValue) {
+        return value == null ? ifNullValue : value;
+    }
+}
+
 export class EmptyChessboard {
-    constructor(size) {
+    constructor(size, squareDistance) {
         this.size = size;
+        this.squareDistance = Nullable.ifNull(squareDistance, 30);
     }
 
     asHtml() {
+        var dist = this.squareDistance;
+        var half = dist / 2;
+
         var list = [];
         for (var i = 0; i < this.size.x; i++) {
-            list.push(new VerticalLine((this.size.y - 1) * 30, {
-                x: 15 + 30 * i,
-                y: 15
+            list.push(new VerticalLine((this.size.y - 1) * dist, {
+                x: half + dist * i,
+                y: half
             }));
         }
         for (var i = 0; i < this.size.y; i++) {
-            list.push(new HorizontalLine((this.size.x - 1) * 30, {
-                x: 15,
-                y: 15 + 30 * i
+            list.push(new HorizontalLine((this.size.x - 1) * dist, {
+                x: half,
+                y: half + dist * i
             }))
         }
         return ListAsHtmlTransformer.asHtml(list);

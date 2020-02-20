@@ -5,46 +5,91 @@ import ChessSides from "../ChessPieces/ChessSides";
 import PieceType from "../ChessPieces/!data-classes/PieceType";
 import Piece from "../ChessPieces/!data-classes/Piece";
 import Square from "../PiecesBoard/Square";
+import Move from "../ChessData/Move";
 
 var root = window.document.getElementById("chessboard");
 
+class EmptyChessboardViewData {
+    constructor(root, squareSize) {
+        this.root = root;
+        this.squareSize = squareSize;
+    }
 
+    addHandler() {
+        this.root.onclick = function() {
+            console.log("onclickHandler");
+            var x = event.clientX;
+            var y = event.clientY;
+            handleOnClick({
+                x: x,
+                y: y
+            });            
+        }
+    }
 
-root.innerHTML = new EmptyChessboard({
-    x: 8,
-    y: 8
-}).asHtml();
+    createView() {
+        this.root.innerHTML = new EmptyChessboard({
+            x: 8,
+            y: 8
+        }, this.squareSize).asHtml();
+    }
+}
 
-var clickedPiece;
+var chessboardData = new EmptyChessboardViewData(root, 30);
+chessboardData.addHandler();
+chessboardData.createView();
 
-root.onclick = function() {
-    var x = event.clientX;
-    var y = event.clientY;
-    x = Math.floor(x / 30);
-    y = Math.floor(y / 30);
-    var square1 = SquareParser.parse("e2");
-    var square2 = Square.get(y, x);
-    console.log("" + x + " " + y);
-    var move = serializeSquare(square1) + "-" + serializeSquare(square2);
-    console.log(move);
+var square1;
+
+function handleOnClick(point) {
+    var x = Math.floor(point.x / chessboardData.squareSize);
+    var y = Math.floor(point.y / chessboardData.squareSize);
+    handleOnClickOnRegion({
+        x: x,
+        y: y
+    });
+}
+
+function handleOnClickOnRegion(r) {
+    var clickedSquare = Square.get(7 - r.y, r.x);
+    console.log("a1: " + JSON.stringify(clickedSquare));
+    if (isOccupied(clickedSquare)) {
+        square1 = clickedSquare;
+        return;
+    }
+
+    makeMove(square1, clickedSquare);
+}
+
+function isOccupied(square) {
+    return window.piecesBoard.get(square) != null;
+}
+
+function unparseMove(move) {
+    var moveStr = serializeSquare(move.from) + "-" + serializeSquare(move.to);
+    return moveStr;
+}
+
+function makeMove(square1, square2) {
+    var move = new Move(square1, square2);
+    var moveStr = unparseMove(move);
+    console.log(moveStr);
     fetch("http://localhost:3000/makeMove", {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
         body: JSON.stringify({
-            move: move
+            move: moveStr
         })
     }).then((response) => response.json())
     .then((data) => {
         console.log("response2: " + data);
-        a();
+        reloadPosition();
     });
 }
 
-
-
-function a() {
+function reloadPosition() {
     fetch("http://localhost:3000/showPosition")
     .then((response) => response.json())
     .then((data) => {
@@ -54,7 +99,7 @@ function a() {
     })
 }
 
-a();
+reloadPosition();
 
 function serializeSquare(square) {
     return String.fromCharCode(97 + square.column) + (square.row + 1);
@@ -75,18 +120,6 @@ function showPosition() {
             }
         }
     }
-
-    var letterElements = document.getElementsByClassName("letter-block");
-    for (var letterElement of letterElements) {
-        letterElement.onclick = function(e) {
-            onclick(letterElement);
-        };
-    }
-}
-
-function onclick(letterElement) {
-    clickedPiece = letterElement
-    console.log("aa1");
 }
 
 function deserializePosition(sPosition) {
