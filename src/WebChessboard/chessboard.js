@@ -8,6 +8,7 @@ import Square from "../PiecesBoard/Square";
 import Move from "../ChessData/Move";
 import Regions from "../Utils/Regions";
 import HandlerAdapter from "../HtmlDomWrapper/HandlerAdapter";
+import RestClientApi from "../ChessMiniAppAdapters/RestClientApi";
 
 var root = window.document.getElementById("chessboard");
 
@@ -37,12 +38,11 @@ var square1;
 
 function handleOnClick(point) {
     var regions = new Regions(chessboardData.squareSize);
-    handleOnClickOnRegion(regions.pointToRegion(point));
+    regions.createHandlerAdapter(handleOnClickOnRegion)(point);
 }
 
 function handleOnClickOnRegion(r) {
     var clickedSquare = Square.get(7 - r.y, r.x);
-    console.log("a1: " + JSON.stringify(clickedSquare));
     if (isOccupied(clickedSquare)) {
         square1 = clickedSquare;
         return;
@@ -55,36 +55,19 @@ function isOccupied(square) {
     return window.piecesBoard.get(square) != null;
 }
 
-function unparseMove(move) {
-    var moveStr = serializeSquare(move.from) + "-" + serializeSquare(move.to);
-    return moveStr;
-}
-
 function makeMove(square1, square2) {
-    var move = new Move(square1, square2);
-    var moveStr = unparseMove(move);
-    console.log(moveStr);
-    fetch("http://localhost:3000/makeMove", {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            move: moveStr
-        })
-    }).then((response) => response.json())
+    RestClientApi.makeMove(square1, square2)
     .then((data) => {
         console.log("response2: " + data);
         reloadPosition();
     });
 }
 
+
 function reloadPosition() {
-    fetch("http://localhost:3000/showPosition")
-    .then((response) => response.json())
+    RestClientApi.getPosition()
     .then((data) => {
         removeLetters();
-        //root.innerHTML += data;
         deserializePosition(data);
         showPosition();
     })
@@ -97,10 +80,6 @@ function removeLetters() {
 }
 
 reloadPosition();
-
-function serializeSquare(square) {
-    return String.fromCharCode(97 + square.column) + (square.row + 1);
-}
 
 function showPosition() {
     for (var i = 0; i < 8; ++i) {
@@ -123,11 +102,9 @@ function deserializePosition(sPosition) {
     var sSquarePieces = sPosition.split(",");
     window.piecesBoard = new PiecesBoard();
     for (var sSquarePiece of sSquarePieces) {
-        console.log(sSquarePiece);
         var sPiece = sSquarePiece.substring(2, 2 + 1);
         var sSquare = sSquarePiece.substring(0, 2);
         var square = SquareParser.parse(sSquare);
-        //var piece = symbolToPiece(sPiece);
         window.piecesBoard.set(square, sPiece);
     }
 }

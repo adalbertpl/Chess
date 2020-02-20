@@ -9,4 +9,11 @@ export default class Regions {
             y: Math.floor(point.y / this.size)
         }
     }
+
+    createHandlerAdapter(innerHandler) {
+        var regions = new Regions(this.size);
+        return (point) => {
+            innerHandler(regions.pointToRegion(point));
+        };
+    }
 }
