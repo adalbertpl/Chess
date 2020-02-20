@@ -6,6 +6,8 @@ import PieceType from "../ChessPieces/!data-classes/PieceType";
 import Piece from "../ChessPieces/!data-classes/Piece";
 import Square from "../PiecesBoard/Square";
 import Move from "../ChessData/Move";
+import Regions from "../Utils/Regions";
+import HandlerAdapter from "../HtmlDomWrapper/HandlerAdapter";
 
 var root = window.document.getElementById("chessboard");
 
@@ -16,15 +18,7 @@ class EmptyChessboardViewData {
     }
 
     addHandler() {
-        this.root.onclick = function() {
-            console.log("onclickHandler");
-            var x = event.clientX;
-            var y = event.clientY;
-            handleOnClick({
-                x: x,
-                y: y
-            });            
-        }
+        HandlerAdapter.addOnClickHandler(this.root, handleOnClick);
     }
 
     createView() {
@@ -42,12 +36,8 @@ chessboardData.createView();
 var square1;
 
 function handleOnClick(point) {
-    var x = Math.floor(point.x / chessboardData.squareSize);
-    var y = Math.floor(point.y / chessboardData.squareSize);
-    handleOnClickOnRegion({
-        x: x,
-        y: y
-    });
+    var regions = new Regions(chessboardData.squareSize);
+    handleOnClickOnRegion(regions.pointToRegion(point));
 }
 
 function handleOnClickOnRegion(r) {
