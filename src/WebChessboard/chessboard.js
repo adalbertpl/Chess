@@ -5,7 +5,6 @@ import ChessSides from "../ChessPieces/ChessSides";
 import PieceType from "../ChessPieces/!data-classes/PieceType";
 import Piece from "../ChessPieces/!data-classes/Piece";
 import Square from "../PiecesBoard/Square";
-import Move from "../ChessData/Move";
 import Regions from "../Utils/Regions";
 import HandlerAdapter from "../HtmlDomWrapper/HandlerAdapter";
 import RestClientApi from "../ChessMiniAppAdapters/RestClientApi";

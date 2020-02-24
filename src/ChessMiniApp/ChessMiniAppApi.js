@@ -13,33 +13,12 @@ import Square from "../PiecesBoard/Square";
 
 export default class ChessMiniAppApi {
     constructor() {
-        this.gamePosition = StartPosition.get()
+        this.gamePosition = StartPosition.get();
     }
 
     showPosition() {
-        return this.serializePosition();
-    }
-
-    serializePosition() {
-        var result = "";
-        for (var i = 0; i < 8; i++) {
-            for (var j = 0; j < 8; j++) {
-                var square = Square.get(i, j);
-                var optionalPiece = this.gamePosition.piecesPosition.get(Square.get(i, j));
-                if (optionalPiece != null) {
-                    result += this.serializeSquare(square) + this.serializePiece(optionalPiece) + ",";
-                }
-            }
-        }
-        return result;
-    }
-
-    serializeSquare(square) {
-        return String.fromCharCode(97 + square.column) + (square.row + 1);
-    }
-
-    serializePiece(piece) {
-        return PieceSymbol.get(piece);
+        var serializedPosition = PositionSerializer.serialize(this.gamePosition);
+        return serializedPosition;
     }
 
     checkMove(moveStr) {
@@ -80,5 +59,29 @@ export default class ChessMiniAppApi {
             ]),
             "showPosition": new MethodDescription("show currect position as ascii art", [])
         };
+    }
+}
+
+class PositionSerializer {
+    static serialize(piecesPosition) {
+        var result = "";
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                var square = Square.get(i, j);
+                var optionalPiece = piecesPosition.get(Square.get(i, j));
+                if (optionalPiece != null) {
+                    result += this.serializeSquare(square) + this.serializePiece(optionalPiece) + ",";
+                }
+            }
+        }
+        return result;
+    }
+
+    static serializeSquare(square) {
+        return String.fromCharCode(97 + square.column) + (square.row + 1);
+    }
+
+    static serializePiece(piece) {
+        return PieceSymbol.get(piece);
     }
 }
