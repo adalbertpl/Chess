@@ -16,7 +16,12 @@ export default class GameConsoleDecorator {
     }
 
     checkMove(moveStr) {
-        var move = MoveParser.parse(moveStr);
+        try {
+            var move = MoveParser.parse(moveStr);
+        } catch (e) {
+            return InvalidMoveMessage.get(e.message);
+        }
+
         var result = this.game.checkMove(move);
         if (result instanceof ValidMoveResult)
             return ValidMoveMessage.get();
@@ -25,8 +30,8 @@ export default class GameConsoleDecorator {
     }
 
     makeMove(moveStr) {
-        var move = MoveParser.parse(moveStr);
         try {
+            var move = MoveParser.parse(moveStr);
             var result = this.game.makeMove(move);
             if (result instanceof WinnerResult)
                 return WinnerMessage.get(result);

@@ -14,6 +14,7 @@ class ChessMiniApp {
     var cmdParser = new CommandParser(app, GameConsoleDecorator.getDescription());
     
     rl.on('line', (inputStr) => {
+      console.log("parsing command");
       var msg = cmdParser.parse(inputStr);
 
       if (msg != "")

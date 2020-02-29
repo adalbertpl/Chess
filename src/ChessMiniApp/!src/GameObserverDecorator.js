@@ -4,6 +4,7 @@ export default class GameObserverDecorator {
     }
 
     setObserver(observer) {
+        console.log("Adding observer");
         this.observer = observer;
     }
 

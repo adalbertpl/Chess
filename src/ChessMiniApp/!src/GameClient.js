@@ -1,7 +1,7 @@
 import {InvalidMoveResult} from "../ChessMiniModule";
 
 // Restricted client-wrapper to the game
-class GameClient {
+export default class GameClient {
     constructor(side, wrapped) {
         this.side = side;
         this.wrapped = wrapped;

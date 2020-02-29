@@ -48,3 +48,12 @@ export class WinnerResult {
         this.winnerSide = winnerSide;
     }
 }
+
+class Nullable {
+    static ifNotNull(value, fn) {
+        if (value == null)
+            return null;
+
+        return fn(value);
+    }
+}

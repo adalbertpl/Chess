@@ -1,19 +1,26 @@
 import GameObserverDecorator from "./GameObserverDecorator";
 import GameClient from "./GameClient";
 import {ChessMiniModule} from "../ChessMiniModule";
+import ChessSides from "../../ChessPieces/ChessSides";
 
 export default class GameWithEngine {
     static bootstrap() {
+        console.log("bootstrapping");
         var game = new ChessMiniModule();
         game = new GameObserverDecorator(game);
 
 
-        var blackGameApi = new GameClient(Side.black, game);
-        var whiteGameApi = new GameClient(Side.white, game);
-        var engine = null; //new Engine();
+        var blackGameApi = new GameClient(ChessSides.Black, game);
+        var whiteGameApi = new GameClient(ChessSides.White, game);
+        var engine = {
+            findBestMove: function() {
+                return null;
+            }
+        }; //new Engine();
         ISimpleEngine.is(engine);
     
-        handleEvent = () => {
+        var handleEvent = () => {
+            console.log("handling event");
             var position = blackGameApi.showPosition();
             var move = engine.findBestMove(position);
             blackGameApi.makeMove(move);
@@ -29,7 +36,7 @@ export default class GameWithEngine {
 
 class ISimpleEngine {
     static is(object) {
-        if (object.findBestMove != null)
+        if (object.findBestMove == null)
             throw new Error("Wrong type");
     }
 }
