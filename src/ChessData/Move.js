@@ -7,4 +7,7 @@ export default class Move {
     static get(f, t) {
         return new Move(f, t)
     }
+    toString() {
+        return `[Move from=${this.from.toString()} to=${this.to.toString()}]`;
+    }
 }

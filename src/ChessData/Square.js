@@ -24,4 +24,8 @@ export default class Square {
     prim() {
         return [this.row, this.column]
     }
+
+    toString() {
+        return this.key();
+    }
 }

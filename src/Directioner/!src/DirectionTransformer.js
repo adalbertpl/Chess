@@ -1,4 +1,4 @@
-import Side from "../../ChessData/Side"
+import ChessSides from "../../ChessPieces/ChessSides";
 
 export default class DirectionTransformer {
     static transform(directions, pieceSide) {
