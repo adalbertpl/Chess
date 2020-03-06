@@ -14,8 +14,7 @@ export class ChessMiniModuleWithEngine extends ChessMiniModule {
     }
 
     _doEngineOption() {
-        var checkMove = this.checkMove.bind(this);
-        var move = this.engine.findBestMove(this.gamePosition, checkMove);
+        var move = this.engine.findBestMove(this.gamePosition, (x) => this.checkMove(x));
         return this._makeMove(move);
     }
 }
