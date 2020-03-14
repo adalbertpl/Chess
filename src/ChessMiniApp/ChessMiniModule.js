@@ -15,92 +15,11 @@ export class ChessMiniModule {
     }
 
     saveGame() {
-        this.gameHistoryDao.save(this.currentGame.moveHistory);
+        this.gameHistoryDao.save(this.currentGame);
     }
 }
 
-class Dao {
-    constructor(dbPath, entityName, serializer, deserializer) {
-        // this.entityName = "GameHistory";
-        // var dbPath = "./db";
-        var fileName = `${entityName}.dat`;
-        this.filePath = `${dbPath}/${fileName}`;
-        this.serializer = serializer;
-        this.deserializer = deserializer;
-        this.collection = null;
-        this.fileToCollection();
-    }
 
-    save(entity) {
-        if (this.collection[entity.id] == null)
-            this.collection.push(entity);
-
-        this.collectionToFile();
-    }
-
-    collectionToFile() {
-        var data = this.marshallEntityCollection();
-        fs.writeFileSync(this.filePath, data);
-    }
-
-    fileToCollection() { 
-        var data = fs.readFileSync(this.filePath);
-        this.unmarshallEntityCollection(data);
-    }
-
-    marshallEntityCollection() {
-        var data = "";
-        for (var entity of this.collection) {
-            var line = this.serializer(entity);
-            data += line + "\n";
-        }
-        return data;
-    }
-    
-    unmarshallEntityCollection(data) {
-        var lines = data.split(/\r?\n/);
-        this.collection = {};
-        for (var line of lines) {
-            line = line.replace("\\n", "\n").replace("\\\\", "\\");
-            var entity = this.deserializer(line);
-            // var values = this.unmarshallValues(line);
-            // var entity = this.entityDescription.reconstructor(...values);
-            this.collection[entity.id] = entity;
-        }
-    }
-
-    // marshallValues(values) {
-    //     var i = 0;
-    //     var line = "";
-    //     for (var value of values) {
-    //         var cell = this.valueSerializer(i, value);
-    //         line += cell + "\t";
-    //         i++;
-    //     }
-    //     return line;
-    // }
-
-    // unmarshallValues(line) {
-    //     var values = [];
-    //     var cells = line.split("\t");
-    //     var i = 0;
-    //     for (var cell of cells) {
-    //         var element = this.valueParser(i, cell);
-    //         list.push(element);
-    //         i++;
-    //     }
-    //     return values
-    // }
-}
-
-class GameHistoryDao {
-    constructor() {
-
-        this.elementParser = (_, x) => MoveParser.parse(x);
-        this.valueSerializer = (_, x) => x.toString();
-        
-    }
-}
 
 class OneChessMiniGame {
     constructor() {
@@ -114,6 +33,12 @@ class OneChessMiniGame {
 
     getSideOnMove() {
         return this.gamePosition.currentSide;
+    }
+
+    getState() {
+        return {
+            moveHistory: this.moveHistory
+        }
     }
 
     // throws: no client error
