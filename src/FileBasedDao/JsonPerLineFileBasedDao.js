@@ -8,13 +8,13 @@ export default class JsonPerLineFileBasedDao {
 
     load(id) {
         var objects = this._loadAll();
-        return objects.find(x => x.id == id);
+        return objects.find(x => ByIdEqualitor.isMatchingId(x, id));
     }
 
     save(object) {
-        var id = object.id;
+        ByIdEqualitor.trySetId(object);
         var objects = this._loadAll();
-        objects = objects.filter(x => x.id == id);
+        objects = objects.filter(x => !ByIdEqualitor.areEqual(x, object));
         objects.push(object);
         this._saveAll(objects);
     }
@@ -30,6 +30,30 @@ export default class JsonPerLineFileBasedDao {
         var lines = this.delimiterSerializer.deserialize(content);
         var objects = lines.map(x => JSON.parse(x));
         return objects;       
+    }
+}
+
+class ByIdEqualitor {
+    static trySetId(object) {
+        if (object._id != null)
+            return;
+        object._id = this._uuidv4();
+    }
+
+    static areEqual(obj1, obj2) {
+        return obj1._id == obj2._id;
+    }
+
+    static isMatchingId(obj, id) {
+        return obj._id == id;
+    }
+
+    static _uuidv4() {
+        // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }
 
