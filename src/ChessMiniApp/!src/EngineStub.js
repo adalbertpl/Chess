@@ -2,6 +2,7 @@ import {InvalidMoveResult} from "../ChessMiniModule";
 import Square from "../ChessData/Square";
 import Range from "AmUtils/Range";
 import Move from "../ChessData/Move";
+import {product} from "../../Utils/Collections";
 
 export default class EngineStub {
     findBestMove(gamePosition, checkMove) {
@@ -30,10 +31,3 @@ function* getMyPieceSquares(side, piecesPosition) {
     }
 }
 
-function* product(enum1, enum2, fn) {
-    for (var el1 of enum1) {
-        for (var el2 of enum2) {
-            yield fn(el1, el2); 
-        }
-    }
-}

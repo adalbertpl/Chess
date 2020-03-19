@@ -5,6 +5,7 @@ import ChessSides from "../ChessPieces/ChessSides"
 import Square from "../PiecesBoard/Square";
 import GamePosition from "../ChessRules/!data-classes/GamePosition";
 import PieceType from "../ChessPieces/!data-classes/PieceType";
+import { product } from "../Utils/Collections";
 
 export default class StartPosition {
   static get() {
@@ -12,42 +13,52 @@ export default class StartPosition {
     var chessData = JSON.parse(rawdata);
 
     var piecesBoard = new PiecesBoard();
-
-    for (var startPosition of chessData.startPosition) {
-      var pieceType = this._getChessPieceTypeByName(startPosition.type);
-      for (var row of this._wrapIfNotArray(startPosition.row)) {
-        for (var column of this._wrapIfNotArray(startPosition.column)) {
-          var piece = new Piece(pieceType, ChessSides.White);
-          console.log(row + " " + column);
-          piecesBoard.set(Square.get(row, column), piece);
-
-          piece = new Piece(pieceType, ChessSides.Black);
-          piecesBoard.set(Square.get(7 - row, column), piece);
-        }
-      }
-    }
+    this.fillPiecesPosition(piecesBoard, chessData.startPosition);
 
     var gamePosition = GamePosition.get(ChessSides.White, piecesBoard);
     return gamePosition;
   }
 
-  static _wrapIfNotArray(value) {
-    if (Array.isArray(value))
-      return value;
+  static fillPiecesPosition(piecesBoard, preStartPositionData) {
+    startPositionData = preStartPositionData.map(x => new PiecePositionData(x))
+    for (var {rows, columns, pieceType} of startPositionData) {
+      for (var {row, column} of product(rows, columns)) {
+        var piece = new Piece(pieceType, ChessSides.White);
+        piecesBoard.set(Square.get(row, column), piece);
 
-    return [value];
-  }
-
-  static _getChessPieceTypeByName(name) {
-    var pieceTypes = {
-      "pawn": PieceType.pawn,
-      "knight": PieceType.knight,
-      "bishop": PieceType.bishop,
-      "rook": PieceType.rook,
-      "queen": PieceType.queen,
-      "king": PieceType.king
+        piece = new Piece(pieceType, ChessSides.Black);
+        piecesBoard.set(Square.get(7 - row, column), piece);
+      }
     }
-
-    return pieceTypes[name];
   }
+}
+
+class PiecePositionData {
+  constructor(piecePositionData) {
+    this.pieceType = _getChessPieceTypeByName(piecePositionData.type),
+    this.rows = _wrapIfNotArray(piecePositionData.row),
+    this.columns = _wrapIfNotArray(piecePositionData.column)
+  }
+
+  decompress() {
+    return product(rows, columns, (row, column) => {row; column; pieceType})
+  }
+}
+
+function _getChessPieceTypeByName(name) {
+  var pieceTypes = {
+    "pawn": PieceType.pawn,
+    "knight": PieceType.knight,
+    "bishop": PieceType.bishop,
+    "rook": PieceType.rook,
+    "queen": PieceType.queen,
+    "king": PieceType.king
+  }
+}
+
+function _wrapIfNotArray(value) {
+  if (Array.isArray(value))
+    return value;
+
+  return [value];
 }
