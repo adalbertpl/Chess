@@ -18,7 +18,6 @@ export default class StartPosition {
       for (var row of this._wrapIfNotArray(startPosition.row)) {
         for (var column of this._wrapIfNotArray(startPosition.column)) {
           var piece = new Piece(pieceType, ChessSides.White);
-          console.log(row + " " + column);
           piecesBoard.set(Square.get(row, column), piece);
 
           piece = new Piece(pieceType, ChessSides.Black);
@@ -27,8 +26,7 @@ export default class StartPosition {
       }
     }
 
-    var gamePosition = GamePosition.get(ChessSides.White, piecesBoard);
-    return gamePosition;
+    return piecesBoard;
   }
 
   static _wrapIfNotArray(value) {

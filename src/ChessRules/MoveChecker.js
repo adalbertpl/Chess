@@ -1,10 +1,10 @@
 import BoardLimits from "./!src/BoardLimits"
 
 export default class MoveChecker {
-    static checkMove(gamePosition, move) {
+    static checkMove(state, move) {
         var from = move.from
         var to = move.to
-        var piecesPosition = gamePosition.piecesPosition 
+        var piecesPosition = state.piecesPosition 
 
         BoardLimits.validate(from)
         BoardLimits.validate(to)
@@ -14,7 +14,7 @@ export default class MoveChecker {
             throw new Error("empty square")
         }
 
-        if (piece.side != gamePosition.currentSide) {
+        if (piece.side != state.currentSide) {
             throw new Error("bad side")
         }
 

@@ -3,18 +3,22 @@ import Square from "./Square";
 import Piece from "../ChessPieces/!data-classes/Piece";
 
 export default class PiecesBoard {
-    constructor() {
-        this.data = new Dictionary(Square, Piece);
+    constructor(state) {
+        this.state = state || new Dictionary(Square, Piece);
+    }
+
+    getState() {
+        return this.state;
     }
 
     get(square) {
         var key = square.key();
-        return this.data.get(key);
+        return this.state.get(key);
     }
 
     set(square, piece) {
         var key = square.key();
-        this.data.set(key, piece);
+        this.state.set(key, piece);
     }
 
     movePiece(from, to) {

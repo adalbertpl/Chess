@@ -1,4 +1,4 @@
-import {ValidMoveResult, WinnerResult} from "../ChessMiniModule";
+import {ValidMoveResult, WinnerResult} from "../ChessMiniOneGame";
 import {InvalidMoveMessage, ValidMoveMessage, WinnerMessage} from "./Message";
 import MethodDescription from "./MethodDescription";
 import ArgumentDescription from "./ArgumentDescription";
@@ -49,7 +49,8 @@ export default class GameConsoleDecorator {
             "makeMove": new MethodDescription("make move (with checking)", [
                 new ArgumentDescription("move", "e.g. a2-a4")
             ]),
-            "showPosition": new MethodDescription("show currect position as ascii art", [])
+            "showPosition": new MethodDescription("show currect position as ascii art", []),
+            "restartGame": new MethodDescription("start new game", []),
         };
     }
 }

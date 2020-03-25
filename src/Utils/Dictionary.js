@@ -16,4 +16,10 @@ export default class Dictionary {
     keys() {
         return this.data.keys();
     }
+
+    copy() {
+        var result = new Dictionary(this.tKey, this.tValue);
+        result.data = new Map(this.data);
+        return result;
+    }
 }
