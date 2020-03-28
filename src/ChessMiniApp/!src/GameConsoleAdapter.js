@@ -41,6 +41,19 @@ export default class GameConsoleDecorator {
         }
     }
 
+    restartGame() {
+        this.game.restartGame();
+    }
+
+    saveGame() {
+        this.game.saveGame();
+    }
+
+    loadGame(gameNumberStr) {
+        var gameNumber = parseInt(gameNumberStr);
+        this.game.loadGame(gameNumber);
+    }
+
     static getDescription() {
         return {
             "checkMove": new MethodDescription("check if move is correct", [
@@ -51,6 +64,10 @@ export default class GameConsoleDecorator {
             ]),
             "showPosition": new MethodDescription("show currect position as ascii art", []),
             "restartGame": new MethodDescription("start new game", []),
+            "saveGame": new MethodDescription("save game", []),
+            "loadGame": new MethodDescription("load game", [
+                new ArgumentDescription("gameNo", "game number e.g. 2")
+            ])
         };
     }
 }

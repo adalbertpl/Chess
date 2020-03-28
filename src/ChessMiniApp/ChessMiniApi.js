@@ -26,7 +26,7 @@ export default class ChessMiniApi {
     }
 
     restartGame() {
-        this.game = new ChessMiniGame();
+        this.game = new ChessMiniOneGame();
     }
 
     saveGame() {

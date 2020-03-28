@@ -1,3 +1,5 @@
+import {ChessMiniOneGame} from "./ChessMiniOneGame";
+
 export default class GameSaver {
 
     constructor() {
@@ -11,6 +13,6 @@ export default class GameSaver {
 
     load(gameNo) {
         var state = this.gameStates[gameNo];
-        return new ChessMiniGame(state)
+        return new ChessMiniOneGame(state)
     }
 }

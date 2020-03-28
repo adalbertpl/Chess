@@ -10,10 +10,9 @@ export class ChessMiniOneGame {
     }
 
     _asState(staticState) {
-        console.log("_asState");
         if (staticState == null)
             return new ChessMiniGameState(ChessSides.White, StartPosition.get());
-        return ChessMiniGameState.fromStaticState(staticState);
+        return ChessMiniGameState.fromStruct(staticState);
     }
 
     getState() {
@@ -64,7 +63,7 @@ class ChessMiniGameState {
     asStruct() {
         return new ChessMiniGameStateStructure(
             this.currentSide, 
-            this.piecesPosition.getState()
+            this.piecesPosition.getState().copy()
         );
     }
 
