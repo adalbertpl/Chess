@@ -2,10 +2,10 @@ import ChessSides from "../ChessPieces/ChessSides"
 import PieceType from "../ChessPieces/!data-classes/PieceType"
 
 export default class MoveMaker {
-    static makeMove(gamePosition, move) {
+    static makeMove(state, move) {
         var from = move.from
         var to = move.to
-        var piecesPosition = gamePosition.piecesPosition
+        var piecesPosition = state.piecesPosition
         
         // winner check
         var capturedPiece = piecesPosition.get(to)
@@ -13,7 +13,7 @@ export default class MoveMaker {
         
         // do move
         piecesPosition.movePiece(from, to)
-        this._changeSide(gamePosition)
+        this._changeSide(state)
 
         return winner
     }
