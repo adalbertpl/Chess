@@ -10,10 +10,9 @@ export default class ChessMiniApi {
     }
 
     static staticConstructor() {
-        Delegations.delegate(this, "getSideOnMove", "game");
-        Delegations.delegate(this, "checkMove", "game");
-        Delegations.delegate(this, "makeMove", "game");
-        Delegations.delegate(this, "showPosition", "game");
+        Delegations.delegateAll(this, 
+            ["getSideOnMove", "checkMove", "makeMove", "showPosition"], 
+            "game");
     }
 
     restartGame() {

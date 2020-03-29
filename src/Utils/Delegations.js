@@ -4,4 +4,10 @@ export default class Delegations {
             return this[propertyName][methodName](...args);
         }
     }
+
+    static delegateAll(clazz, methodNames, propertyName) {
+        for (var methodName of methodNames) {
+            this.delegate(clazz, methodName, propertyName);
+        }
+    }
 }
