@@ -1,6 +1,6 @@
 //import GameWithEngine from "./!src/GameWithEngine"
 import CommandParser from "../CommandParser/CommandParser"
-import GameConsoleDecorator from "./!src/GameConsoleDecorator";
+import GameApiForConsoleAdapter from "./!src/GameApiForConsoleAdapter";
 import readline from "readline"
 import ChessMiniApi from "./ChessMiniApi";
 
@@ -11,16 +11,30 @@ const rl = readline.createInterface({
 
 class ChessMiniApp {
   main() {
-    var app = new GameConsoleDecorator(new ChessMiniApi());
-    var cmdParser = new CommandParser(app, GameConsoleDecorator.getDescription());
-    
+    var apiForConsole = new GameApiForConsoleAdapter(new ChessMiniApi());
+    console.log("apiForConsole constructed");
+    var consoleAdapter = new ConsoleAdapter(apiForConsole);
+    consoleAdapter.attachToStream(rl);
+  }
+}
+
+class ConsoleAdapter {
+  constructor(apiForConsole) {
+    console.log("constructing ConsoleAdapter");
+    this.apiForConsole = apiForConsole;
+    this.cmdParser = new CommandParser(apiForConsole, apiForConsole.constructor.getDescription());
+  }
+
+  attachToStream(rl) {
+    var cmdParser = this.cmdParser;
     rl.on('line', (inputStr) => {
       var msg = cmdParser.parse(inputStr);
 
       if (msg != "")
           console.log(msg);
-    })
+    });
   }
 }
 
-new ChessMiniApp().main()
+new ChessMiniApp().main();
+
