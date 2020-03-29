@@ -12,7 +12,6 @@ const rl = readline.createInterface({
 class ChessMiniApp {
   main() {
     var apiForConsole = new GameApiForConsoleAdapter(new ChessMiniApi());
-    console.log("apiForConsole constructed");
     var consoleAdapter = new ConsoleAdapter(apiForConsole);
     consoleAdapter.attachToStream(rl);
   }
@@ -20,7 +19,6 @@ class ChessMiniApp {
 
 class ConsoleAdapter {
   constructor(apiForConsole) {
-    console.log("constructing ConsoleAdapter");
     this.apiForConsole = apiForConsole;
     this.cmdParser = new CommandParser(apiForConsole, apiForConsole.constructor.getDescription());
   }

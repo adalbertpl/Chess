@@ -5,7 +5,7 @@ import ArgumentDescription from "./ArgumentDescription";
 import MoveParser from "../../ChessData/MoveParser"
 import ChessPositionDrawer from "./ChessPositionDrawer"
 
-export default class GameConsoleDecorator {
+export default class GameApiForConsoleAdapter {
     constructor(game) {
         this.game = game;
     }
