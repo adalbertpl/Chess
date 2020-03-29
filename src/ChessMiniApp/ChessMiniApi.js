@@ -1,5 +1,5 @@
 import GamePosition from "../ChessRules/!data-classes/GamePosition";
-
+import Delegations from "../Utils/Delegations";
 import GameSaver from "./GameSaver";
 import {ChessMiniOneGame} from "./ChessMiniOneGame";
 
@@ -9,20 +9,10 @@ export default class ChessMiniApi {
         this.gameSaver = new GameSaver();
     }
 
-    showPosition() {
-        return this.game.showPosition();
-    }
-
-    getSideOnMove() {
-        return this.game.getSideOnMove();
-    }
-
-    checkMove(move) {
-        return this.game.checkMove(move);
-    }
-
-    makeMove(move) {
-        return this.game.makeMove(move);
+    static staticConstructor() {
+        Delegations.delegateAll(this, 
+            ["getSideOnMove", "checkMove", "makeMove", "showPosition"], 
+            "game");
     }
 
     restartGame() {
@@ -37,3 +27,5 @@ export default class ChessMiniApi {
         this.game = this.gameSaver.load(gameNumber);
     }
 }
+
+ChessMiniApi.staticConstructor();
